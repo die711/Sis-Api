@@ -10,7 +10,7 @@ type Career struct {
 }
 
 func (c *Career) GetAll() ([]models.Career, error) {
-	q := `select * from career where status = true;`
+	q := `select id, name from career where status = true;`
 
 	rows, err := c.Data.DB.Query(q)
 	if err != nil {
@@ -22,7 +22,7 @@ func (c *Career) GetAll() ([]models.Career, error) {
 	var careers []models.Career
 	for rows.Next() {
 		var career models.Career
-		rows.Scan(&career.Id, &career.Name,&career.Status)
+		rows.Scan(&career.Id, &career.Name)
 		careers = append(careers, career)
 	}
 
@@ -30,13 +30,13 @@ func (c *Career) GetAll() ([]models.Career, error) {
 }
 
 func (c *Career) GetById(id uint) (models.Career, error) {
-	q := `select * from career where id = $1 and status = true;`
+	q := `select id, name from career where id = $1 and status = true;`
 
 	row := c.Data.DB.QueryRow(q, id)
 
 	var career models.Career
 
-	err := row.Scan(&career.Id, &career.Name,&career.Status)
+	err := row.Scan(&career.Id, &career.Name)
 	if err != nil {
 		return models.Career{}, err
 	}

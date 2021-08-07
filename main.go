@@ -12,6 +12,7 @@ func main() {
 	e := echo.New()
 	apiGroup := e.Group("/api")
 	routes.CareerRoutes(apiGroup)
+	routes.CourseRoutes(apiGroup)
 
 	d := data.New()
 	if err := d.DB.Ping(); err != nil {
