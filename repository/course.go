@@ -36,65 +36,67 @@ func (c *Course) GetById(id uint) (models.Course, error) {
 
 	var course models.Course
 
-	err := row.Scan(&course.Id,&course.CareerId, &course.Name,&course.Credits)
+	err := row.Scan(&course.Id, &course.CareerId, &course.Name, &course.Credits)
 	if err != nil {
 		return models.Course{}, err
 	}
 
 	return course, nil
 }
+
 //
-//func (c *Career) Create(career models.Career) error {
-//	q := `insert into career (name,status) values ($1,true);`
+func (c *Course) Create(course models.Course) error {
+	q := `insert into course (career_id,name,credits,status) values ($1,$2,$3,true);`
+
+	stmt, err := c.Data.DB.Prepare(q)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(course.CareerId, course.Name, course.Credits)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //
-//	stmt, err := c.Data.DB.Prepare(q)
-//
-//	if err != nil {
-//		return err
-//	}
-//
-//	defer stmt.Close()
-//
-//	_, err = stmt.Exec(career.Name)
-//	if err != nil {
-//		return err
-//	}
-//
-//	return nil
-//}
-//
-//func (c *Career) Update(career models.Career, id uint) error {
-//	q := `update career set name=$1 where id=$2;`
-//
-//	stmt, err := c.Data.DB.Prepare(q)
-//
-//	if err != nil {
-//		return err
-//	}
-//
-//	defer stmt.Close()
-//
-//	_, err = stmt.Exec(career.Name, id)
-//	if err != nil {
-//		return err
-//	}
-//
-//	return nil
-//}
-//
-//func (c *Career) Delete(id uint) error {
-//	q := `update career set status=false where id=$1;`
-//
-//	stmt, err := c.Data.DB.Prepare(q)
-//
-//	if err != nil {
-//		return err
-//	}
-//
-//	defer stmt.Close()
-//	_, err = stmt.Exec(id)
-//	if err != nil {
-//		return err
-//	}
-//	return nil
-//}
+func (c *Course) Update(course models.Course, id uint) error {
+	q := `update course set career_id =$1,name=$2, credits=$3 where id=$4;`
+
+	stmt, err := c.Data.DB.Prepare(q)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(course.CareerId, course.Name, course.Credits, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Course) Delete(id uint) error {
+	q := `update course set status=false where id=$1;`
+
+	stmt, err := c.Data.DB.Prepare(q)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+	_, err = stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

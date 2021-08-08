@@ -7,14 +7,13 @@ import (
 	"sis/repository"
 )
 
-func CourseRoutes(group *echo.Group){
+func CourseRoutes(group *echo.Group) {
 
 	courseHandlers := handlers.Course{Repository: repository.Course{Data: data.New()}}
 	group.GET("/courses", courseHandlers.GetAll)
 	group.GET("/courses/:id", courseHandlers.GetById)
-	//group.POST("/careers", careerHandlers.Create)
-	//group.PUT("/careers/:id", careerHandlers.Update)
-	//group.DELETE("/careers/:id", careerHandlers.Delete)
+	group.POST("/courses", courseHandlers.Create)
+	group.PUT("/courses/:id", courseHandlers.Update)
+	group.DELETE("/courses/:id", courseHandlers.Delete)
 
 }
-
