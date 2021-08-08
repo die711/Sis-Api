@@ -5,6 +5,13 @@ CREATE TABLE IF NOT EXISTS career (
     CONSTRAINT pk_career PRIMARY KEY(id)
     );
 
+CREATE TABLE IF NOT EXISTS type (
+    id serial NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    status Boolean not null,
+    CONSTRAINT pk_type PRIMARY KEY(id)
+    );
+
 CREATE TABLE IF NOT EXISTS course (
     id serial NOT NULL,
     career_id int NOT NULL,
