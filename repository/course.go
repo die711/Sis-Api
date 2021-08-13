@@ -44,7 +44,6 @@ func (c *Course) GetById(id uint) (models.Course, error) {
 	return course, nil
 }
 
-//
 func (c *Course) Create(course models.Course) error {
 	q := `insert into course (career_id,name,credits,status) values ($1,$2,$3,true);`
 
@@ -64,7 +63,6 @@ func (c *Course) Create(course models.Course) error {
 	return nil
 }
 
-//
 func (c *Course) Update(course models.Course, id uint) error {
 	q := `update course set career_id =$1,name=$2, credits=$3 where id=$4;`
 
