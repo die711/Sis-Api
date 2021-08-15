@@ -3,7 +3,9 @@ package handlers
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"sis/models"
 	"sis/repository"
+	"strconv"
 )
 
 type MatterUser struct {
@@ -15,32 +17,35 @@ func (mu MatterUser) GetAll(c echo.Context) error {
 	return c.JSON(http.StatusOK, careers)
 }
 
-//func (mu MatterUser) GetById(c echo.Context) error {
-//	id, _ := strconv.Atoi(c.Param("id"))
+func (mu MatterUser) GetById(c echo.Context) error {
+	userId, _ := strconv.Atoi(c.Param("userId"))
+	matterId, _ := strconv.Atoi(c.Param("matterId"))
+
+	career, err := mu.Repository.GetById(uint(userId), uint(matterId))
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "")
+	}
+
+	return c.JSON(http.StatusOK, career)
+}
+
 //
-//	career, err := mu.Repository.GetById(uint(id))
-//
-//	if err != nil {
-//		return c.JSON(http.StatusBadRequest, "")
-//	}
-//
-//	return c.JSON(http.StatusOK, career)
-//}
-//
-//func (mu MatterUser) Create(c echo.Context) error {
-//	career := models.Career{}
-//
-//	if err := c.Bind(&career); err != nil {
-//		return c.JSON(http.StatusBadRequest, "")
-//	}
-//	err := mu.Repository.Create(career)
-//
-//	if err != nil {
-//		return c.JSON(http.StatusBadRequest, "")
-//	}
-//
-//	return c.JSON(http.StatusOK, "Career Created")
-//}
+func (mu MatterUser) Create(c echo.Context) error {
+	matterUser := models.MatterUser{}
+
+	if err := c.Bind(&matterUser); err != nil {
+		return c.JSON(http.StatusBadRequest, "")
+	}
+	err := mu.Repository.Create(matterUser)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "")
+	}
+
+	return c.JSON(http.StatusOK, "MatterUser Created")
+}
+
 //
 //func (mu MatterUser) Update(c echo.Context) error {
 //	career := models.Career{}

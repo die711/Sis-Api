@@ -24,8 +24,8 @@ func (mu *MatterUser) GetAll() ([]models.MatterUser, error) {
 		var matterUser models.MatterUser
 		rows.Scan(&matterUser.UserId, &matterUser.MatterId, &matterUser.Cal1, &matterUser.Cal2, &matterUser.Cal3, &matterUser.Cal4)
 		mattersUsers = append(mattersUsers, matterUser)
-	}
 
+	}
 	return mattersUsers, nil
 }
 
@@ -44,26 +44,25 @@ func (mu *MatterUser) GetById(user_id uint, matter_id uint) (models.MatterUser, 
 	return matterUser, nil
 }
 
-//
-////
-//func (mu *MatterUser) Create(matter models.Matter) error {
-//	q := `insert into matter (user_id,course_id) values ($1,$2);`
-//
-//	stmt, err := m.Data.DB.Prepare(q)
-//
-//	if err != nil {
-//		return err
-//	}
-//
-//	defer stmt.Close()
-//
-//	_, err = stmt.Exec(matter.UserId, matter.CourseId)
-//	if err != nil {
-//		return err
-//	}
-//
-//	return nil
-//}
+func (mu *MatterUser) Create(matterUser models.MatterUser) error {
+	q := `insert into matterUser (user_id,matter_id,cal1, cal2, cal3, cal4) values ($1,$2,$3,$4,$5,$6);`
+
+	stmt, err := mu.Data.DB.Prepare(q)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(matterUser.UserId, matterUser.MatterId, matterUser.Cal1, matterUser.Cal2, matterUser.Cal3, matterUser.Cal4)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //
 ////
 //func (mu *MatterUser) Update(matter models.Matter, id uint) error {
