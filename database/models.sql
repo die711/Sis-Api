@@ -36,3 +36,28 @@ CREATE TABLE IF NOT EXISTS "user" (
     CONSTRAINT fk_user_type FOREIGN KEY(type_id) REFERENCES type(id)
     );
 
+CREATE TABLE IF NOT EXISTS matter (
+    id serial NOT NULL,
+    user_id int NOT NULL,
+    course_id int NOT NULL,
+    CONSTRAINT pk_matter PRIMARY KEY(id),
+    CONSTRAINT fk_matter_course FOREIGN KEY(course_id) REFERENCES course(id),
+    CONSTRAINT fk_matter_user FOREIGN KEY(user_id) REFERENCES "user"(id)
+
+    );
+
+CREATE TABLE IF NOT EXISTS matter_user (
+     user_id int NOT NULL,
+     matter_id int NOT NULL,
+     cal1 int NOT NULL,
+     cal2 int NOT NULL,
+     cal3 int NOT NULL,
+     cal4 int NOT NULL,
+     CONSTRAINT pk_matter_user PRIMARY KEY(user_id,matter_id),
+    CONSTRAINT fk_matter_user_user FOREIGN KEY(matter_id) REFERENCES matter(id),
+    CONSTRAINT fk_matter_user_matter FOREIGN KEY(user_id) REFERENCES "user"(id)
+
+    );
+
+
+

@@ -50,7 +50,7 @@ func (ca Career) Update(c echo.Context) error {
 	err := c.Bind(&career)
 
 	if err != nil {
-		 return c.JSON(http.StatusBadRequest, "")
+		return c.JSON(http.StatusBadRequest, "")
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
@@ -64,7 +64,6 @@ func (ca Career) Update(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Career Updated")
 
 }
-
 
 func (ca Career) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
