@@ -16,6 +16,7 @@ func main() {
 	routes.TypeRoutes(apiGroup)
 	routes.UserRoutes(apiGroup)
 	routes.MatterRoutes(apiGroup)
+	routes.MatterUserRoutes(apiGroup)
 
 	d := data.New()
 	if err := d.DB.Ping(); err != nil {

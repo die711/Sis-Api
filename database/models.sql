@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS matter (
 CREATE TABLE IF NOT EXISTS matter_user (
      user_id int NOT NULL,
      matter_id int NOT NULL,
-     cal1 int NOT NULL,
-     cal2 int NOT NULL,
-     cal3 int NOT NULL,
-     cal4 int NOT NULL,
+     cal1 int,
+     cal2 int,
+     cal3 int,
+     cal4 int,
      CONSTRAINT pk_matter_user PRIMARY KEY(user_id,matter_id),
     CONSTRAINT fk_matter_user_user FOREIGN KEY(matter_id) REFERENCES matter(id),
     CONSTRAINT fk_matter_user_matter FOREIGN KEY(user_id) REFERENCES "user"(id)
